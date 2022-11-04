@@ -1,0 +1,187 @@
+
+<div class="container">
+    <main class="px-3 py-2">
+
+        <div class="row g-3">
+            <h2 style="text-align:right;">מחשבון לחישוב העלאת שכר</h2>
+            <div class="col-12 bg-light p-3 rounded ta-r">
+                <h4 style="text-align:right;" class="mb-3">פרטי משרה</h4>
+
+                <form class="needs-validation" [formGroup]="salaryCalcForm" (ngSubmit)="salaryCalcSubmit($event)" novalidate>
+                    <div class="row g-3">
+
+                        <div class="partTime col-2">
+                            <label class="form-label">חלקיות משרה:</label>
+                            <select class="form-select" name="ddlPartTime" formControlName="partTime" required [ngClass]="{'is-invalid': submitted && partTime.errors}">
+                                <option *ngFor="let partTime of arrPartTime; let i=index" id={{partTime}} ngValue="{{partTime}}">{{partTime}}%</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                נא למלא חלקיות משרה
+                            </div>
+                        </div>
+                        <div class="professionalLevel col-2">
+                            <label class="form-label">רמה מקצועית:</label>
+                            <select class="form-select" formControlName="professionalLevel" [ngClass]="{'is-invalid': submitted && professionalLevel.errors}">
+                                <option *ngFor="let profLevel of arrProfLvls; let i=index" ngValue="{{i+1}}">
+                                    {{profLevel}}
+                                </option>
+                            </select>
+                            <div class="invalid-feedback">
+                                נא למלא רמה מקצועית
+                            </div>
+                        </div>
+                        <div class="managerialLevel col-2">
+                            <label class="form-label">רמה ניהולית:</label>
+                            <select class="form-control" formControlName="managerialLevel" required [ngClass]="{'is-invalid': submitted && managerialLevel.errors}">
+                                <option *ngFor="let mngLevel of arrMngLvls; let i=index" ngValue="{{i}}">{{mngLevel}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                נא למלא רמה ניהולית
+                            </div>
+                        </div>
+                        <div class="totalSeniority col-2">
+                            <label class="form-label">סה''כ שנות וותק</label>
+                            <input class="form-control" min="0" formControlName="totalSeniority" type="number" required [ngClass]="{'is-invalid': submitted && totalSeniority.errors}" />
+                            <div class="invalid-feedback">
+                                נא למלא שנות וותק
+                            </div>
+                        </div>
+                        <div class="cbIsAllowed col-2 isAllowed-form-part">
+                            <label class="form-label">
+                                <input name="cbIsAllowed" type="checkbox"
+                                       formControlName="AllowedAddWork" />
+                                האם זכאי לתוספת עבודה בחוק?
+                            </label>
+                        </div>
+                        <div class="AllowedAddWork col-2" *ngIf="AllowedAddWork.value">
+                            <label class="form-label">שייך לקבוצה</label>
+                            <select class="form-select" formControlName="AllowedAddWorkGroup" required [ngClass]="{'is-invalid': submitted && AllowedAddWorkGroup.errors}">
+                                <option *ngFor="let WorkGroup of arrAddWorkGrp; let i=index" ngValue="{{i+1}}">{{WorkGroup}}</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                נא לשייך לקבוצה
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="col-12">
+                            <button type="submit" class="btn btn-lg btn-info col-2">חשב את השכר שלי</button>
+                        </div>
+                    </div>
+                </form>
+                <!--{{salaryCalcForm.value | json}}-->
+
+            </div>
+
+            <div class="table-responsive ta-r">
+                <table class="table clac-sal-tbl">
+                    
+                        <tr>
+                            <th colspan="13" class="text-white bg-info">
+                                חישוב רכיבי שכר בסיס
+                            </th>
+                            <th rowspan="3" class="text-white bg-success">
+                                שכר בסיס חדש
+                            </th>
+                        </tr>
+                    
+                        <tr>
+                            <td colspan="3" class="text-white bg-info">
+                                שכר יסוד
+                            </td>
+                            <td rowspan="2">
+                                שכר יסוד לפי חלקיות משרה
+                            </td>
+                            <td colspan="2" class="text-white bg-info">
+                                תוספת ותק לשכר
+                            </td>
+                            <td rowspan="2">
+                                תוספת ותק לשכר
+                            </td>
+                            <td colspan="2" class="text-white bg-info">
+                                תוספת עבודה מתוקף מינוי בחוק
+                            </td>
+                            <td rowspan="2">
+                                תוספת עבודה מתוקף מינוי בחוק
+                            </td>
+                            <td rowspan="2">
+                                סה"כ שכר בסיס לפני העלאה
+                            </td>
+                            <td rowspan="2">
+                                שיעור העלאת שכר
+                            </td>
+                            <td rowspan="2">
+                                תוספת העלאת שכר
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-white bg-info">
+                                חלקיות משרה
+                            </td>
+                            <td class="text-white bg-info">
+                                רמה מקצועית
+                            </td>
+                            <td class="text-white bg-info">
+                                רמה ניהולית
+                            </td>
+                            <td class="text-white bg-info">
+                                סה"כ שנות ותק
+                            </td>
+                            <td class="text-white bg-info">
+                                שיעור תוספת ותק
+                            </td>
+                            <td class="text-white bg-success">
+                                זכאי לתוספת עבודה מתוקף מינוי בחוק?
+                            </td>
+                            <td class="text-white bg-success">
+                                עבור זכאי שייכות - לקבוצה א או ב?
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                {{partTime.value+'%'}}
+                            </td>
+                            <td>
+                                {{arrProfLvls[salaryCalcForm.get('professionalLevel').value-1]}}
+                            </td>
+                            <td>
+                                {{arrMngLvls[salaryCalcForm.get('managerialLevel').value]}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.baseSalary : ''}}
+                            </td>
+                            <td>
+                                {{salaryCalcForm.get('totalSeniority').value}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.addSeniorityRate : ''}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.salSeniorityRate : ''}}
+                            </td>
+                            <td>
+                                {{(salaryCalcForm.get('AllowedAddWork').value)? 'כן' : 'לא'}}
+                            </td>
+                            <td>
+                                {{(salaryCalcForm.get('AllowedAddWork').value)? arrAddWorkGrp[salaryCalcForm.get('AllowedAddWorkGroup').value-1] : '' }}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.addWorkByLow : ''}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.totalBaseBeforIncrease : ''}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.salaryIncreaseRate : ''}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.addSalaryIncrease : ''}}
+                            </td>
+                            <td class="bg-light">
+                                {{calcSalary? calcSalary.newBaseSalary : ''}}
+                            </td>
+                        </tr>
+                </table>
+            </div>
+        </div>
+    </main>
+</div>

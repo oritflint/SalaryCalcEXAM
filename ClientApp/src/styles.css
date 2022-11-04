@@ -1,0 +1,56 @@
+/* You can add global styles to this file, and also import other style files */
+
+/* Provide sufficient contrast against white background */
+h2, h4 {
+    text-align: right;
+}
+
+a {
+  color: #0366d6;
+}
+
+code {
+  color: #e01a76;
+}
+
+.btn-primary {
+  color: #fff;
+  background-color: #1b6ec2;
+  border-color: #1861ac;
+}
+
+/*************************************************/
+.isAllowed-form-part {
+    height: 90px;
+}
+
+.clac-sal-tbl tr {
+    border: solid black 1px;
+}
+
+.clac-sal-tbl th {
+    border: solid black 1px;
+}
+
+.clac-sal-tbl td {
+    border: solid black 1px;
+}
+
+.ta-r{
+    text-align:right;
+}
+
+.ta-r td{
+    text-align: right;
+    font-size:10px;
+}
+
+    .ta-r th {
+        text-align: right;
+        font-size: 10px;
+    }
+
+btn{
+    align-content:center;
+}
+
