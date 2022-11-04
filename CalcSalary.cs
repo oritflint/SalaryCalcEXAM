@@ -4,6 +4,8 @@ namespace SalaryCalcEXAM
 {
     public class CalcSalary
     {
+        //:נתונים מחושבים ונשלחים כפלט
+
         public double BaseSalary { get; set; } = 0;
         public double AddSeniorityRate { get; set; } = 0;
         public double SalSeniorityRate { get; set; } = 0;

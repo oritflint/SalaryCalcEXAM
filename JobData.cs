@@ -1,7 +1,10 @@
 using System;
 
+
 namespace SalaryCalcEXAM
 {
+    //:נתוני הקלט מהמשתמש
+
     public class JobData
     {
         public int PartTime { get; set; } = 0;

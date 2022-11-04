@@ -1,4 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
+body {
+    background: url('app/assets/bgCalculator.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
 
 /* Provide sufficient contrast against white background */
 h2, h4 {
@@ -24,15 +30,7 @@ code {
     height: 90px;
 }
 
-.clac-sal-tbl tr {
-    border: solid black 1px;
-}
-
-.clac-sal-tbl th {
-    border: solid black 1px;
-}
-
-.clac-sal-tbl td {
+.clac-sal-tbl tr, th, td {
     border: solid black 1px;
 }
 
@@ -43,6 +41,7 @@ code {
 .ta-r td{
     text-align: right;
     font-size:10px;
+    background-color:white;
 }
 
     .ta-r th {

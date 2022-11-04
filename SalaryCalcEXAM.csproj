@@ -35,11 +35,6 @@
   <ItemGroup>
     <None Remove="ClientApp\src\app\injectable.ts" />
     <None Remove="ClientApp\src\app\models\calcSalary.interface.ts" />
-    <None Remove="ClientApp\src\app\models\job.interface.ts" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <TypeScriptCompile Include="ClientApp\src\app\models\job.interface.ts" />
   </ItemGroup>
 
   <ItemGroup>

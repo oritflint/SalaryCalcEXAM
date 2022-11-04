@@ -3,16 +3,16 @@
     <main class="px-3 py-2">
 
         <div class="row g-3">
-            <h2 style="text-align:right;">מחשבון לחישוב העלאת שכר</h2>
+            <h2>מחשבון לחישוב העלאת שכר</h2>
             <div class="col-12 bg-light p-3 rounded ta-r">
-                <h4 style="text-align:right;" class="mb-3">פרטי משרה</h4>
+                <h4 class="mb-3">פרטי משרה</h4>
 
                 <form class="needs-validation" [formGroup]="salaryCalcForm" (ngSubmit)="salaryCalcSubmit($event)" novalidate>
                     <div class="row g-3">
 
                         <div class="partTime col-2">
-                            <label class="form-label">חלקיות משרה:</label>
-                            <select class="form-select" name="ddlPartTime" formControlName="partTime" required [ngClass]="{'is-invalid': submitted && partTime.errors}">
+                            <label id="lblPartTime" class="form-label">חלקיות משרה:</label>
+                            <select id="ddlPartTime" class="form-select" formControlName="fcpartTime" required [ngClass]="{'is-invalid': submitted && fcpartTime.errors}">
                                 <option *ngFor="let partTime of arrPartTime; let i=index" id={{partTime}} ngValue="{{partTime}}">{{partTime}}%</option>
                             </select>
                             <div class="invalid-feedback">
@@ -20,8 +20,8 @@
                             </div>
                         </div>
                         <div class="professionalLevel col-2">
-                            <label class="form-label">רמה מקצועית:</label>
-                            <select class="form-select" formControlName="professionalLevel" [ngClass]="{'is-invalid': submitted && professionalLevel.errors}">
+                            <label id="lblProfLvl" class="form-label">רמה מקצועית:</label>
+                            <select id="ddlProfLvl" class="form-select" formControlName="fcProfLvl" [ngClass]="{'is-invalid': submitted && fcProfLvl.errors}">
                                 <option *ngFor="let profLevel of arrProfLvls; let i=index" ngValue="{{i+1}}">
                                     {{profLevel}}
                                 </option>
@@ -31,8 +31,8 @@
                             </div>
                         </div>
                         <div class="managerialLevel col-2">
-                            <label class="form-label">רמה ניהולית:</label>
-                            <select class="form-control" formControlName="managerialLevel" required [ngClass]="{'is-invalid': submitted && managerialLevel.errors}">
+                            <label id="lblMngLvl" class="form-label">רמה ניהולית:</label>
+                            <select id="ddlMngLvl" class="form-control" formControlName="fcMngLvl" required [ngClass]="{'is-invalid': submitted && fcMngLvl.errors}">
                                 <option *ngFor="let mngLevel of arrMngLvls; let i=index" ngValue="{{i}}">{{mngLevel}}</option>
                             </select>
                             <div class="invalid-feedback">
@@ -40,22 +40,21 @@
                             </div>
                         </div>
                         <div class="totalSeniority col-2">
-                            <label class="form-label">סה''כ שנות וותק</label>
-                            <input class="form-control" min="0" formControlName="totalSeniority" type="number" required [ngClass]="{'is-invalid': submitted && totalSeniority.errors}" />
+                            <label id="lblTotalSnr" class="form-label">סה''כ שנות וותק</label>
+                            <input id="nbrTotalSnr" class="form-control" min="0" formControlName="fcTotalSnr" type="number" required [ngClass]="{'is-invalid': submitted && fcTotalSnr.errors}" />
                             <div class="invalid-feedback">
                                 נא למלא שנות וותק
                             </div>
                         </div>
                         <div class="cbIsAllowed col-2 isAllowed-form-part">
-                            <label class="form-label">
-                                <input name="cbIsAllowed" type="checkbox"
-                                       formControlName="AllowedAddWork" />
+                            <label id="lblIsAllowdAdd" class="form-label">
+                                <input id="chkIsAllowdAdd" type="checkbox" formControlName="cdIsAddWork" />
                                 האם זכאי לתוספת עבודה בחוק?
                             </label>
                         </div>
-                        <div class="AllowedAddWork col-2" *ngIf="AllowedAddWork.value">
-                            <label class="form-label">שייך לקבוצה</label>
-                            <select class="form-select" formControlName="AllowedAddWorkGroup" required [ngClass]="{'is-invalid': submitted && AllowedAddWorkGroup.errors}">
+                        <div class="AllowedAddWork col-2" *ngIf="cdIsAddWork.value">
+                            <label id="lblAllowdAddGrp" class="form-label">שייך לקבוצה</label>
+                            <select id="ddlAllowdAddGrp" class="form-select" formControlName="cbAddWorkGroup" required [ngClass]="{'is-invalid': submitted && cbAddWorkGroup.errors}">
                                 <option *ngFor="let WorkGroup of arrAddWorkGrp; let i=index" ngValue="{{i+1}}">{{WorkGroup}}</option>
                             </select>
                             <div class="invalid-feedback">
@@ -63,12 +62,11 @@
                             </div>
                         </div>
                         <hr />
-                        <div class="col-12">
-                            <button type="submit" class="btn btn-lg btn-info col-2">חשב את השכר שלי</button>
+                        <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+                            <button id="btnSubmit" type="submit" class="btn btn-lg btn-info col-2">חשב את השכר שלי</button>
                         </div>
                     </div>
                 </form>
-                <!--{{salaryCalcForm.value | json}}-->
 
             </div>
 
@@ -138,31 +136,31 @@
                         </tr>
                         <tr>
                             <td>
-                                {{partTime.value+'%'}}
+                                {{fcpartTime.value+'%'}}
                             </td>
                             <td>
-                                {{arrProfLvls[salaryCalcForm.get('professionalLevel').value-1]}}
+                                {{arrProfLvls[fcProfLvl.value-1]}}
                             </td>
                             <td>
-                                {{arrMngLvls[salaryCalcForm.get('managerialLevel').value]}}
+                                {{arrMngLvls[fcMngLvl.value]}}
                             </td>
                             <td class="bg-light">
                                 {{calcSalary? calcSalary.baseSalary : ''}}
                             </td>
                             <td>
-                                {{salaryCalcForm.get('totalSeniority').value}}
+                                {{fcTotalSnr.value}}
                             </td>
                             <td class="bg-light">
-                                {{calcSalary? calcSalary.addSeniorityRate : ''}}
+                                {{calcSalary? calcSalary.addSeniorityRate+'%' : ''}}
                             </td>
                             <td class="bg-light">
                                 {{calcSalary? calcSalary.salSeniorityRate : ''}}
                             </td>
                             <td>
-                                {{(salaryCalcForm.get('AllowedAddWork').value)? 'כן' : 'לא'}}
+                                {{(cdIsAddWork.value)? 'כן' : 'לא'}}
                             </td>
                             <td>
-                                {{(salaryCalcForm.get('AllowedAddWork').value)? arrAddWorkGrp[salaryCalcForm.get('AllowedAddWorkGroup').value-1] : '' }}
+                                {{(cdIsAddWork.value)? arrAddWorkGrp[cbAddWorkGroup.value-1] : '' }}
                             </td>
                             <td class="bg-light">
                                 {{calcSalary? calcSalary.addWorkByLow : ''}}
@@ -171,7 +169,7 @@
                                 {{calcSalary? calcSalary.totalBaseBeforIncrease : ''}}
                             </td>
                             <td class="bg-light">
-                                {{calcSalary? calcSalary.salaryIncreaseRate : ''}}
+                                {{calcSalary? calcSalary.salaryIncreaseRate+'%' : ''}}
                             </td>
                             <td class="bg-light">
                                 {{calcSalary? calcSalary.addSalaryIncrease : ''}}

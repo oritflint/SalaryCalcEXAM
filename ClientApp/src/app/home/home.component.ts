@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormBuilder, Validators } from '@angular/forms';
-import { Ijob } from '../models/job.interface';
 import { ICalcSalary } from '../models/calcSalary.interface';
 
 @Component({
@@ -18,7 +17,7 @@ export class HomeComponent {
     public arrPartTime: Array<string> = ['100', '75', '50'];
     public arrProfLvls: Array<string> = ['מתחיל', 'מנוסה'];
     public arrMngLvls: Array<string> = ['ללא', 'רמת ניהול 1', 'רמת ניהול 2', 'רמת ניהול 3', 'רמת ניהול 4'];
-    public arrAddWorkGrp: Array<string> = ['א', 'ב']
+    public arrAddWorkGrp: Array<string> = ['קבוצה א', 'קבוצה ב']
 
     public propLvl;
     constructor(private http: HttpClient, @Inject('BASE_URL') baseUrl: string, private fb: FormBuilder) {
@@ -27,38 +26,38 @@ export class HomeComponent {
     }
 
     public salaryCalcForm = this.fb.group({
-        partTime: [this.arrPartTime[0], Validators.required],
-        professionalLevel: ['1', Validators.required],
-        managerialLevel: ['0', Validators.required],
-        totalSeniority: [, Validators.required],
-        AllowedAddWork: false
-        , AllowedAddWorkGroup: ['1', Validators.required]
+        fcpartTime: [this.arrPartTime[0], Validators.required],
+        fcProfLvl: ['1', Validators.required],
+        fcMngLvl: ['0', Validators.required],
+        fcTotalSnr: [, Validators.required],
+        cdIsAddWork: false,
+        cbAddWorkGroup: ['1', Validators.required]
     });
 
 
     //GETers 
-    get AllowedAddWork(): any {
-        return this.salaryCalcForm.get('AllowedAddWork');
+    get cdIsAddWork(): any {
+        return this.salaryCalcForm.get('cdIsAddWork');
     }
 
-    get partTime(): any {
-        return this.salaryCalcForm.get('partTime');
+    get fcpartTime(): any {
+        return this.salaryCalcForm.get('fcpartTime');
     }
 
-    get professionalLevel(): any {
-        return this.salaryCalcForm.get('professionalLevel');
+    get fcProfLvl(): any {
+        return this.salaryCalcForm.get('fcProfLvl');
     }
 
-    get managerialLevel(): any {
-        return this.salaryCalcForm.get('managerialLevel');
+    get fcMngLvl(): any {
+        return this.salaryCalcForm.get('fcMngLvl');
     }
 
-    get totalSeniority(): any {
-        return this.salaryCalcForm.get('totalSeniority');
+    get fcTotalSnr(): any {
+        return this.salaryCalcForm.get('fcTotalSnr');
     }
 
-    get AllowedAddWorkGroup(): any {
-        return this.salaryCalcForm.get('AllowedAddWorkGroup');
+    get cbAddWorkGroup(): any {
+        return this.salaryCalcForm.get('cbAddWorkGroup');
     }
 
 
@@ -69,12 +68,12 @@ export class HomeComponent {
             console.log("our form:", this.salaryCalcForm)
 
             this.http.get<ICalcSalary[]>(this._baseUrl
-                + 'calcSalary?partTime=' + this.partTime.value
-                + '&professionalLevel=' + this.managerialLevel.value
-                + '&managerialLevel=' + this.managerialLevel.value
-                + '&totalSeniority=' + this.totalSeniority.value
-                + '&isAllowedAddWork=' + this.AllowedAddWork.value
-                + '&AllowedAddWorkGroup=' + this.AllowedAddWorkGroup.value
+                + 'calcSalary?partTime=' + this.fcpartTime.value
+                + '&professionalLevel=' + this.fcProfLvl.value
+                + '&managerialLevel=' + this.fcMngLvl.value
+                + '&totalSeniority=' + this.fcTotalSnr.value
+                + '&isAllowedAddWork=' + this.cdIsAddWork.value
+                + '&AllowedAddWorkGroup=' + this.cbAddWorkGroup.value
             ).subscribe(result => {
                 this.calcSalary = result[0];
                 console.log("jobAfter:", this.calcSalary)
